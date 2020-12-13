@@ -9,13 +9,15 @@ export class MenuController {
     constructor(private menuService: MenuService) {}
 
     @Post()
-    create(@Body() createMenuDto: CreateMenuDto): void {
+    async create(@Body() createMenuDto: CreateMenuDto) {
         const menu: Menu = createMenuDto;
-        this.menuService.create(menu);
+        const created = await this.menuService.create(menu);
+
+        return created;
     }
 
     @Get()
-    findAll(): Menu[] {
-        return this.menuService.findAll();
+    async findAll(): Promise<Menu[]> {
+        return await this.menuService.findAll();
     }
 }
